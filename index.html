@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vương Tuấn Hào | Hồ sơ cá nhân</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #1a1a1a;
+      --surface: rgba(27, 27, 27, 0.92);
+      --surface-strong: rgba(31, 31, 31, 0.96);
+      --text: #ff4d4d;
+      --muted: #d2d2d2;
+      --accent: #ff4d4d;
+      --border: #333333;
+      --shadow: 0 32px 120px rgba(0,0,0,.22);
+      --glow: rgba(255, 77, 77, 0.24);
+      --bg-light: #f5f5dc;
+      --text-light: #2e8b57;
+      --accent-light: #2e8b57;
+      --surface-light: rgba(245, 245, 220, 0.96);
+      --border-light: #c1b88c;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      background: radial-gradient(circle at center, rgba(255,255,255,.02), transparent 30%), var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background 0.9s cubic-bezier(0.16, 1, 0.3, 1), color 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.light {
+      color: var(--text-light);
+      background: radial-gradient(circle at center, rgba(0,0,0,.04), transparent 30%), var(--bg-light);
+    }
+
+    body.light .text-slate-300,
+    body.light .text-slate-400,
+    body.light .text-slate-500,
+    body.light .text-slate-600 {
+      color: rgba(46, 139, 87, 0.95) !important;
+    }
+
+    body.light .text-slate-300 {
+      color: rgba(46, 139, 87, 0.85) !important;
+    }
+
+    body.light .text-slate-400 {
+      color: rgba(46, 139, 87, 0.75) !important;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: radial-gradient(circle at 20% 15%, rgba(255,255,255,0.08), transparent 12%), radial-gradient(circle at 75% 20%, rgba(255,255,255,0.04), transparent 14%);
+      opacity: 0.75;
+      animation: skyFlow 22s ease-in-out infinite;
+    }
+
+    body.light::before {
+      background-image: radial-gradient(circle at 30% 15%, rgba(46,139,87,0.12), transparent 10%), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 12%);
+      opacity: 0.65;
+      animation: skyFlowLight 24s ease-in-out infinite;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .page-frame {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 28px 28px 64px;
+    }
+
+    .panel {
+      backdrop-filter: blur(20px);
+      border: 4px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    body.light .panel {
+      background: var(--surface-light);
+      border-color: var(--border-light);
+      box-shadow: 0 32px 90px rgba(0,0,0,.12);
+    }
+
+    .pixel-icon {
+      image-rendering: pixelated;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .nav-glow {
+      background: rgba(27, 27, 27, 0.84);
+      border: 4px solid var(--border);
+    }
+
+    body.light .nav-glow {
+      background: rgba(245, 245, 220, 0.92);
+    }
+
+    .section-headline {
+      font-size: clamp(1.1rem, 1.25vw, 1.25rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .card {
+      border: 4px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    body.light .card {
+      background: var(--surface-light);
+    }
+
+    .glow-button,
+    .skill-meter::after,
+    .project-pill {
+      box-shadow: 0 0 28px rgba(255, 77, 77, 0.12);
+      transition: transform 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    body.light .glow-button,
+    body.light .skill-meter::after,
+    body.light .project-pill {
+      box-shadow: 0 0 28px rgba(46, 139, 87, 0.14);
+    }
+
+    .glow-button:hover,
+    .project-card:hover,
+    .theme-handle:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 38px rgba(255, 77, 77, 0.24);
+    }
+
+    body.light .glow-button:hover,
+    body.light .project-card:hover,
+    body.light .theme-handle:hover {
+      box-shadow: 0 0 38px rgba(46, 139, 87, 0.24);
+    }
+
+    .spotlight {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 30%);
+      opacity: 0.45;
+      mix-blend-mode: screen;
+      transition: opacity 0.25s ease;
+    }
+
+    body.light .spotlight {
+      background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,0.24), transparent 22%);
+      opacity: 0.38;
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pixel-clouds,
+    .ender-particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .pixel-clouds span,
+    .ender-particles span {
+      position: absolute;
+      display: block;
+      width: 64px;
+      height: 24px;
+      background: rgba(255,255,255,0.28);
+      filter: blur(0.3px);
+      animation-timing-function: ease-in-out;
+    }
+
+    .pixel-clouds span {
+      background: rgba(46, 139, 87, 0.16);
+      border: 4px solid rgba(46, 139, 87, 0.22);
+      animation-name: cloudMove;
+    }
+
+    .project-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .skill-meter {
+      position: relative;
+      height: 1.1rem;
+      background: rgba(255,255,255,.06);
+      border: 4px solid var(--border);
+    }
+
+    body.light .skill-meter {
+      background: rgba(0,0,0,.03);
+    }
+
+    .skill-meter::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: var(--percent, 60%);
+      background: linear-gradient(90deg, rgba(255,77,77,0.95), rgba(255,77,77,0.42));
+    }
+
+    body.light .skill-meter::after {
+      background: linear-gradient(90deg, rgba(46,139,87,0.95), rgba(46,139,87,0.42));
+    }
+
+    .theme-toggle {
+      width: 140px;
+      height: 46px;
+      border: 4px solid var(--border);
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    body.light .theme-toggle {
+      background: var(--surface-light);
+    }
+
+    .theme-handle {
+      width: 42px;
+      height: 42px;
+      background: var(--text);
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+      z-index: 2;
+      border: 4px solid var(--border);
+    }
+
+    body.light .theme-handle {
+      background: var(--text-light);
+      border-color: var(--border-light);
+    }
+
+    .theme-toggle.active .theme-handle {
+      left: 92px;
+    }
+
+    .theme-toggle span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 1rem;
+      z-index: 1;
+    }
+
+    .theme-toggle.active span:first-child { color: rgba(255,255,255,.5); }
+    .theme-toggle.active span:last-child { color: var(--muted); }
+
+    .footer-cta {
+      border: 4px solid var(--border);
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+      background: var(--surface);
+    }
+
+    body.light .footer-cta {
+      background: var(--surface-light);
+    }
+
+    .btn-primary {
+      border: 4px solid var(--border);
+      background: rgba(255, 77, 77, 0.12);
+      color: var(--text);
+      padding: 14px 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+    }
+
+    body.light .btn-primary {
+      background: rgba(46, 139, 87, 0.12);
+      color: var(--text-light);
+    }
+
+    .btn-primary:hover { transform: scale(1.04); box-shadow: 0 0 30px rgba(255,77,77,0.18); }
+    body.light .btn-primary:hover { box-shadow: 0 0 30px rgba(46,139,87,0.18); }
+
+    .btn-primary:active,
+    .theme-toggle:active,
+    .nav-links a:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 16px rgba(255,77,77,0.1);
+    }
+
+    body.light .btn-primary:active,
+    body.light .theme-toggle:active,
+    body.light .nav-links a:active {
+      box-shadow: 0 0 16px rgba(46,139,87,0.12);
+    }
+
+    .page-title {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border: 4px solid var(--border);
+      background: rgba(255,255,255,0.04);
+    }
+
+    body.light .hero-badge { background: rgba(46, 139, 87, 0.06); }
+
+    .border-box {
+      border: 4px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .page-frame { padding: 22px 18px 48px; }
+      .theme-toggle { width: 120px; }
+      .theme-toggle.active .theme-handle { left: 76px; }
+    }
+
+    @media (max-width: 720px) {
+      .page-frame { padding: 18px 16px 40px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .nav-links { flex-wrap: wrap; gap: 10px; }
+      .theme-toggle { margin-top: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="spotlight"></div>
+  <div class="pixel-clouds"></div>
+  <div class="ender-particles"></div>
+
+  <main class="page-frame">
+    <header class="panel p-6 mb-8 grid gap-6 lg:grid-cols-[auto_220px] items-center nav-glow">
+      <div>
+        <div class="page-title">Portfolio Cá Nhân</div>
+        <div class="flex flex-wrap items-center gap-4">
+          <span class="pixel-icon">🍎</span>
+          <span class="text-sm tracking-[0.3em] uppercase">Vương Tuấn Hào</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-4 flex-wrap nav-links">
+        <a href="#about" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Về tôi</a>
+        <a href="#skills" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Thông thạo</a>
+        <a href="#projects" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Dự án</a>
+        <a href="#contact" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Liên hệ</a>
+        <div id="themeToggle" class="theme-toggle" role="button" aria-label="Chuyển đổi chế độ sáng/tối">
+          <span>☀️</span>
+          <span>🌙</span>
+          <div class="theme-handle">☀️</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="panel p-8 mb-8 hero-grid grid gap-8 lg:grid-cols-[1.4fr_0.9fr] scroll-reveal visible">
+      <div class="space-y-6">
+        <div class="hero-badge">
+          <span class="pixel-icon">🍎</span>
+          <span>Thiết kế tương lai thương hiệu</span>
+        </div>
+        <div class="space-y-3">
+          <h1 class="text-4xl lg:text-5xl font-semibold leading-tight">Vương Tuấn Hào</h1>
+          <p class="text-sm uppercase tracking-[0.22em] text-slate-300">Sinh ngày 14/10/2006 | Đại học Gia Định</p>
+        </div>
+        <p class="max-w-3xl leading-8 text-slate-300">Tôi là nhà thiết kế số với hơn 1 năm kinh nghiệm thực chiến, luôn tin rằng thiết kế là công cụ giải quyết vấn đề. Công việc của tôi nằm ở giao điểm giữa sự tinh tế thẩm mỹ và trải nghiệm người dùng hiệu quả. Bên cạnh nghệ thuật thị giác, tôi hướng tới xây dựng một agency Thiết kế Logo & Nhận diện thương hiệu đẳng cấp thế giới.</p>
+        <p class="text-slate-300 italic">“Kẻ mạnh không phàn nàn về môi trường.”</p>
+      </div>
+      <div class="border-box p-6 grid gap-6">
+        <div>
+          <div class="section-headline">Tầm nhìn</div>
+          <h2 class="text-2xl font-semibold">Mục tiêu Agency</h2>
+          <p class="mt-3 text-slate-300">Tôi phấn đấu tạo ra một agency hàng đầu, nơi Logo và nhận diện thương hiệu được thiết kế để vận hành hiệu quả trên mọi nền tảng số.</p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="section-headline">Học vấn</div>
+          <div class="bg-white/5 border-4 border-current p-4">
+            <p class="uppercase tracking-[0.16em] text-slate-300">Ngành Đồ họa kỹ thuật số</p>
+            <p>Đại học Gia Định (GDU)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="panel p-8 mb-8 scroll-reveal">
+      <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="border-box p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="pixel-icon">📖</span>
+            <h3 class="section-headline">Về tôi</h3>
+          </div>
+          <p class="text-slate-300 leading-8">Tôi cân bằng giữa vai trò là sinh viên Đồ họa kỹ thuật số tại GDU và một nhà thiết kế chuyên nghiệp với tầm nhìn kinh doanh mạnh mẽ. Mỗi sản phẩm tôi tạo ra không chỉ là hình ảnh nguyên vẹn mà còn phải đồng bộ với trải nghiệm người dùng, tính hiệu quả và câu chuyện thương hiệu.</p>
+        </div>
+        <div class="border-box p-6 grid gap-5">
+          <div>
+            <div class="section-headline">Triết lý cốt lõi</div>
+            <p class="text-slate-300 leading-7">Thiết kế không chỉ là vẻ ngoài; thiết kế là cách nó hoạt động.</p>
+          </div>
+          <div>
+            <div class="section-headline">Mục tiêu nghề nghiệp</div>
+            <p class="text-slate-300 leading-7">Người giàu thứ 2 Việt Nam.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="panel p-8 mb-8 scroll-reveal">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="pixel-icon">⛏️</span>
+        <h3 class="section-headline">Thông thạo</h3>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="card p-6 border-box">
+          <div class="flex items-center justify-between mb-4">
+            <span class="flex items-center gap-2"><span class="pixel-icon">⛏️</span> PS</span>
+            <span>60%</span>
+          </div>
+          <div class="skill-meter" style="--percent:60%;"></div>
+        </div>
+        <div class="card p-6 border-box">
+          <div class="flex items-center justify-between mb-4">
+            <span class="flex items-center gap-2"><span class="pixel-icon">⚔️</span> AI</span>
+            <span>60%</span>
+          </div>
+          <div class="skill-meter" style="--percent:60%;"></div>
+        </div>
+        <div class="card p-6 border-box">
+          <div class="flex items-center justify-between mb-4">
+            <span class="flex items-center gap-2"><span class="pixel-icon">🪓</span> Figma</span>
+            <span>60%</span>
+          </div>
+          <div class="skill-meter" style="--percent:60%;"></div>
+        </div>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-2 mt-8">
+        <div class="card p-6 border-box">
+          <h4 class="uppercase text-xs tracking-[0.22em] mb-3">Phần mềm thiết kế</h4>
+          <p class="text-slate-300 leading-7">Thành thạo Adobe Photoshop, Adobe Illustrator, Figma và Adobe After Effects cho đồ họa chuyển động.</p>
+        </div>
+        <div class="card p-6 border-box">
+          <h4 class="uppercase text-xs tracking-[0.22em] mb-3">Năng lực chuyên môn</h4>
+          <p class="text-slate-300 leading-7">Hệ thống nhận diện thương hiệu, xây dựng logo, nguyên mẫu UI/UX, kiểu chữ, lý thuyết màu sắc, kể chuyện thương hiệu, chiến lược sáng tạo, tư duy thiết kế, quản lý dự án, nghiên cứu thương hiệu.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="panel p-8 mb-8 scroll-reveal">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="pixel-icon">🛠️</span>
+        <h3 class="section-headline">Dự án</h3>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-2">
+        <article class="project-card card p-6 border-box">
+          <div class="flex items-center justify-between mb-4">
+            <span class="project-pill uppercase text-[0.7rem] tracking-[0.22em]">Trường hợp</span>
+            <span class="text-sm text-slate-400">UI/UX</span>
+          </div>
+          <h4 class="text-2xl font-semibold mb-3">Thiết kế Website bán bánh mì</h4>
+          <p class="text-slate-300 leading-7 mb-4">Vai trò: Nhà thiết kế UI/UX chính. Tập trung tạo trải nghiệm đặt hàng di động liền mạch, kết hợp phong cách ẩm thực Việt truyền thống với sự tiện lợi hiện đại.</p>
+          <div class="flex items-center gap-3 text-sm uppercase tracking-[0.16em] text-slate-400"><span>Ưu tiên di động</span><span>|</span><span>Hướng thương hiệu</span></div>
+        </article>
+        <article class="project-card card p-6 border-box">
+          <div class="flex items-center justify-between mb-4">
+            <span class="project-pill uppercase text-[0.7rem] tracking-[0.22em]">Trường hợp</span>
+            <span class="text-sm text-slate-400">Nhận diện thương hiệu</span>
+          </div>
+          <h4 class="text-2xl font-semibold mb-3">Bộ sưu tập Logo & Nhận diện</h4>
+          <p class="text-slate-300 leading-7 mb-4">Vai trò: Nhà thiết kế nhận diện thương hiệu. Một loạt thiết kế logo chiến lược tập trung vào khả năng mở rộng, sự tối giản và câu chuyện thương hiệu độc đáo cho các startup địa phương.</p>
+          <div class="flex items-center gap-3 text-sm uppercase tracking-[0.16em] text-slate-400"><span>Tối giản</span><span>|</span><span>Khả năng mở rộng</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel p-8 mb-8 scroll-reveal">
+      <div class="border-box p-6 grid gap-5">
+        <div class="flex items-center gap-3">
+          <span class="pixel-icon">🧭</span>
+          <h3 class="section-headline">Liên hệ</h3>
+        </div>
+        <div class="grid gap-4 md:grid-cols-3">
+          <div class="card p-5 border-box">
+            <p class="uppercase text-xs tracking-[0.18em] mb-2">Email</p>
+            <p class="text-slate-300">vhao14102006@gmail.com</p>
+          </div>
+          <div class="card p-5 border-box">
+            <p class="uppercase text-xs tracking-[0.18em] mb-2">Facebook</p>
+            <p class="text-slate-300">vuonghao.14</p>
+          </div>
+          <div class="card p-5 border-box">
+            <p class="uppercase text-xs tracking-[0.18em] mb-2">Phone</p>
+            <p class="text-slate-300">03xx.xxx.xxx</p>
+          </div>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="border-box p-5">
+            <p class="uppercase text-xs tracking-[0.18em] mb-2">Địa điểm</p>
+            <p class="text-slate-300">Thành phố Hồ Chí Minh, Việt Nam</p>
+          </div>
+          <div class="border-box p-5">
+            <p class="uppercase text-xs tracking-[0.18em] mb-2">Mạng xã hội</p>
+            <p class="text-slate-300">Behance · LinkedIn · Facebook</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-cta scroll-reveal">
+      <div>
+        <h3 class="text-xl font-semibold">Hãy cùng tạo nên điều tuyệt vời</h3>
+        <p class="text-slate-300 leading-7">Portfolio này kết hợp cấu trúc pixel của Minecraft và chuyển động điện ảnh của Apple, giúp chuyển tải thông điệp rõ ràng và chuyên nghiệp.</p>
+      </div>
+      <a href="mailto:vhao14102006@gmail.com" class="btn-primary">Bắt đầu dự án</a>
+    </footer>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const body = document.body;
+    const toggle = document.getElementById('themeToggle');
+    const handle = toggle.querySelector('.theme-handle');
+    const spotlight = document.querySelector('.spotlight');
+    const clouds = document.querySelector('.pixel-clouds');
+    const particles = document.querySelector('.ender-particles');
+    const reveals = Array.from(document.querySelectorAll('.scroll-reveal'));
+
+    const createBackground = () => {
+      clouds.innerHTML = '';
+      particles.innerHTML = '';
+      if (body.classList.contains('light')) {
+        for (let i = 0; i < 7; i++) {
+          const cloud = document.createElement('span');
+          cloud.style.left = Math.random() * 100 + '%';
+          cloud.style.top = Math.random() * 70 + '%';
+          cloud.style.width = `${80 + Math.random() * 120}px`;
+          cloud.style.height = '24px';
+          cloud.style.animation = `cloudMove ${20 + Math.random() * 12}s ease-in-out infinite`;
+          cloud.style.opacity = 0.4 + Math.random() * 0.25;
+          clouds.appendChild(cloud);
+        }
+      } else {
+        for (let i = 0; i < 28; i++) {
+          const p = document.createElement('span');
+          const size = 4 + Math.random() * 12;
+          p.style.width = `${size}px`;
+          p.style.height = `${size}px`;
+          p.style.left = Math.random() * 100 + '%';
+          p.style.top = Math.random() * 100 + '%';
+          p.style.background = 'rgba(205, 129, 255, 0.8)';
+          p.style.borderRadius = '0';
+          p.style.animation = `particleFloat ${8 + Math.random() * 12}s ease-in-out infinite`;
+          p.style.opacity = 0.2 + Math.random() * 0.35;
+          particles.appendChild(p);
+        }
+      }
+    };
+
+    const revealOnScroll = () => {
+      const windowHeight = window.innerHeight;
+      reveals.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < windowHeight - 80) {
+          section.classList.add('visible');
+        }
+      });
+    };
+
+    const setTheme = (isLight) => {
+      if (isLight) {
+        body.classList.add('light');
+        toggle.classList.add('active');
+        handle.textContent = '🌙';
+        body.style.background = 'radial-gradient(circle at center, rgba(255,255,255,0.24), transparent 30%), var(--bg-light)';
+      } else {
+        body.classList.remove('light');
+        toggle.classList.remove('active');
+        handle.textContent = '☀️';
+        body.style.background = 'radial-gradient(circle at center, rgba(255,255,255,0.02), transparent 30%), var(--bg)';
+      }
+      createBackground();
+    };
+
+    toggle.addEventListener('click', () => {
+      const isLight = !body.classList.contains('light');
+      setTheme(isLight);
+    });
+
+    document.addEventListener('mousemove', (event) => {
+      const x = (event.clientX / window.innerWidth) * 100;
+      const y = (event.clientY / window.innerHeight) * 100;
+      spotlight.style.setProperty('--mx', x + '%');
+      spotlight.style.setProperty('--my', y + '%');
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('resize', revealOnScroll);
+
+    createBackground();
+    revealOnScroll();
+  </script>
+  <style>
+    @keyframes cloudMove {
+      0% { transform: translateX(-25vw) translateY(0px); opacity: 0.32; }
+      40% { transform: translateX(-10vw) translateY(-6px); opacity: 0.42; }
+      60% { transform: translateX(10vw) translateY(6px); opacity: 0.42; }
+      100% { transform: translateX(25vw) translateY(0px); opacity: 0.32; }
+    }
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(0px); opacity: 0.2; }
+      50% { transform: translateY(-18px); opacity: 0.35; }
+    }
+    @keyframes skyFlow {
+      0% { background-position: 20% 15%, 75% 20%; }
+      50% { background-position: 25% 10%, 80% 16%; }
+      100% { background-position: 20% 15%, 75% 20%; }
+    }
+    @keyframes skyFlowLight {
+      0% { background-position: 30% 15%, 80% 10%; }
+      50% { background-position: 35% 12%, 75% 8%; }
+      100% { background-position: 30% 15%, 80% 10%; }
+    }
+  </style>
+</body>
+</html>
