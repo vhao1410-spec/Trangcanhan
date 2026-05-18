@@ -363,6 +363,44 @@
       border: 4px solid var(--border);
     }
 
+    .about-image-card,
+    .about-image {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+    }
+
+    .career-path {
+      margin: 0;
+      padding-left: 1.2rem;
+      list-style: inside disc;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .career-path li {
+      margin-bottom: 0.65rem;
+    }
+
+    body.nav-clicked .panel {
+      transform: translateY(3px);
+      opacity: 0.96;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a.active {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    body.light .nav-links a.active {
+      background: rgba(46, 139, 87, 0.16);
+      border-color: var(--text-light);
+      color: var(--text-light);
+    }
+
     @media (max-width: 900px) {
       .page-frame { padding: 22px 18px 48px; }
       .theme-toggle { width: 120px; }
@@ -373,7 +411,7 @@
       .page-frame { padding: 18px 16px 40px; }
       .grid-2 { grid-template-columns: 1fr; }
       .hero-grid { grid-template-columns: 1fr; }
-      .nav-links { flex-wrap: wrap; gap: 10px; }
+      .nav-links { flex-wrap: wrap; gap: 10px; justify-content: center; }
       .theme-toggle { margin-top: 14px; }
     }
   </style>
@@ -384,7 +422,7 @@
   <div class="ender-particles"></div>
 
   <main class="page-frame">
-    <header class="panel p-6 mb-8 grid gap-6 lg:grid-cols-[auto_220px] items-center nav-glow">
+    <header class="panel p-6 mb-8 grid gap-6 lg:grid-cols-[1fr_auto_220px] items-center nav-glow">
       <div>
         <div class="page-title">Portfolio Cá Nhân</div>
         <div class="flex flex-wrap items-center gap-4">
@@ -392,11 +430,13 @@
           <span class="text-sm tracking-[0.3em] uppercase">Vương Tuấn Hào</span>
         </div>
       </div>
-      <div class="flex items-center justify-end gap-4 flex-wrap nav-links">
+      <nav class="flex items-center justify-center gap-4 flex-wrap nav-links">
         <a href="#about" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Về tôi</a>
         <a href="#skills" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Thông thạo</a>
         <a href="#projects" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Dự án</a>
         <a href="#contact" class="px-4 py-3 border-4 border-current text-sm uppercase tracking-[0.18em] hover:bg-white/5">Liên hệ</a>
+      </nav>
+      <div class="flex items-center justify-end">
         <div id="themeToggle" class="theme-toggle" role="button" aria-label="Chuyển đổi chế độ sáng/tối">
           <span>☀️</span>
           <span>🌙</span>
@@ -443,14 +483,24 @@
           </div>
           <p class="text-slate-300 leading-8">Tôi cân bằng giữa vai trò là sinh viên Đồ họa kỹ thuật số tại GDU và một nhà thiết kế chuyên nghiệp với tầm nhìn kinh doanh mạnh mẽ. Mỗi sản phẩm tôi tạo ra không chỉ là hình ảnh nguyên vẹn mà còn phải đồng bộ với trải nghiệm người dùng, tính hiệu quả và câu chuyện thương hiệu.</p>
         </div>
-        <div class="border-box p-6 grid gap-5">
-          <div>
-            <div class="section-headline">Triết lý cốt lõi</div>
-            <p class="text-slate-300 leading-7">Thiết kế không chỉ là vẻ ngoài; thiết kế là cách nó hoạt động.</p>
+        <div class="grid gap-5">
+          <div class="border-box p-6 grid gap-5">
+            <div>
+              <div class="section-headline">Triết lý cốt lõi</div>
+              <p class="text-slate-300 leading-7">Thiết kế không chỉ là vẻ ngoài; thiết kế là cách nó hoạt động.</p>
+            </div>
+            <div>
+              <div class="section-headline">Mục tiêu nghề nghiệp</div>
+              <ul class="career-path">
+                <li>2027 – Thực tập</li>
+                <li>2028 – Đảm nhiệm dự án nhỏ</li>
+                <li>2029 – Thực hiện các dự án lớn</li>
+                <li>2030 – Mở công ty thiết kế</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <div class="section-headline">Mục tiêu nghề nghiệp</div>
-            <p class="text-slate-300 leading-7">Người giàu thứ 2 Việt Nam.</p>
+          <div class="border-box overflow-hidden about-image-card">
+            <img src="https://github.com/user-attachments/assets/f6153776-b919-4c82-ba2d-cc81fac516af" alt="Ảnh Vương Tuấn Hào" class="about-image" />
           </div>
         </div>
       </div>
@@ -523,7 +573,7 @@
       </div>
     </section>
 
-    <section class="panel p-8 mb-8 scroll-reveal">
+    <section id="contact" class="panel p-8 mb-8 scroll-reveal">
       <div class="border-box p-6 grid gap-5">
         <div class="flex items-center gap-3">
           <span class="pixel-icon">🧭</span>
@@ -574,6 +624,38 @@
     const clouds = document.querySelector('.pixel-clouds');
     const particles = document.querySelector('.ender-particles');
     const reveals = Array.from(document.querySelectorAll('.scroll-reveal'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+
+    const updateActiveNav = () => {
+      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        const link = navLinks.find(a => a.getAttribute('href') === `#${section.id}`);
+        if (!link) return;
+        if (scrollPosition >= top && scrollPosition < bottom) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    };
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const targetId = link.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        navLinks.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+        body.classList.add('nav-clicked');
+        setTimeout(() => body.classList.remove('nav-clicked'), 400);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
 
     const createBackground = () => {
       clouds.innerHTML = '';
@@ -643,11 +725,18 @@
       spotlight.style.setProperty('--my', y + '%');
     });
 
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('resize', revealOnScroll);
+    window.addEventListener('scroll', () => {
+      revealOnScroll();
+      updateActiveNav();
+    });
+    window.addEventListener('resize', () => {
+      revealOnScroll();
+      updateActiveNav();
+    });
 
     createBackground();
     revealOnScroll();
+    updateActiveNav();
   </script>
   <style>
     @keyframes cloudMove {
